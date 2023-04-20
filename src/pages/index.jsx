@@ -19,7 +19,7 @@ export default function Home() {
         <div>
           bla bla
         </div>
-        <div style={{backgroundColor: 'blue'}}>
+        <div style={{backgroundColor: 'lightcoral'}}>
           more bla bla
         </div>
       </Layout>
