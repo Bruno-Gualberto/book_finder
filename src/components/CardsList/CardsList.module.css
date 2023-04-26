@@ -1,4 +1,24 @@
-.cards__container {
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.searchField {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  width: 50%;
+  min-width: 200px;
+  max-width: 300px;
+  border: 1px solid rgb(169, 169, 169);
+}
+
+.searchButton {
+  padding: 10px;
+}
+
+.cardsContainer {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
