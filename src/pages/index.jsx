@@ -1,10 +1,6 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import Link from 'next/link';
 import Layout from '../components/Layout';
-
-const inter = Inter({ subsets: ['latin'] })
+import CardsList from '../components/CardsList';
 
 export default function Home() {
   return (
@@ -16,12 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <div>
-          bla bla
-        </div>
-        <div style={{backgroundColor: 'lightcoral'}}>
-          more bla bla
-        </div>
+        <CardsList />
       </Layout>
     </>
   )
