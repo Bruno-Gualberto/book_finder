@@ -4,13 +4,24 @@ import styles from './CardsList.module.css'
 
 export default function CardsList () {
   const [searchValue, setSearchValue] = useState('');
+  const [booksList, setBooksList] = useState([]);
+
 
   const handleChange = (e) => {
     setSearchValue(e.target.value);
   }
+// useQuery - react query
+// swr
 
-  const handleSearch = () => {
-    console.log(searchValue);
+  const handleSearch = async () => {
+    const req = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchValue}&orderBy=relevance`);
+    const searchResult = await req.json();
+
+    const booksInfo = searchResult.items.map(item => {
+      return item.volumeInfo;
+    })
+
+    setBooksList(booksInfo);
   }
 
   return (
@@ -31,12 +42,13 @@ export default function CardsList () {
         </button>
       </div>
       <div className={styles.cardsContainer}>
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
+        {booksList.length ? 
+          booksList.map((bookData, index) => {
+            return <BookCard bookData={bookData} key={index}/>
+          })
+          :
+          null
+        }
       </div>
     </div>
   )
