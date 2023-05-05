@@ -17,3 +17,9 @@
 .searchButton {
   padding: 10px;
 }
+
+.errorMessage {
+  color: #ddd;
+  font-style: italic;
+  text-align: center;
+}

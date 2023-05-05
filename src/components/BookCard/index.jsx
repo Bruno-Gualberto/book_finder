@@ -8,7 +8,7 @@ export default function BookCard({bookData}) {
 
   const handleAuthors = authors => {
     let authorsList = '';
-    authors && authors.map((author, index) => {
+    authors && authors.forEach((author, index) => {
       index === authors.length - 1 ? 
       authorsList += `${author}`
       :
@@ -31,9 +31,7 @@ export default function BookCard({bookData}) {
       <h1 className={styles.title}>{title}</h1>
       <div className={styles.card__content}>
         <Image
-          src={ imageLinks && 
-            handleInfos(imageLinks.thumbnail, '/images/book.png') 
-          }
+          src={ imageLinks ? imageLinks.thumbnail : '/images/book.png' }
           alt='book cover'
           width={150}
           height={150}
