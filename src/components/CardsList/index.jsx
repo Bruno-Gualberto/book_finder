@@ -19,15 +19,23 @@ export default function CardsList ({ mostRelevantBooks }) {
 // useQuery - react query
 // swr
 
+  const fetchData = async () => {
+    const req = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchValue}&orderBy=relevance`);
+    return await req.json();
+  }
+
   const handleSearch = async () => {
     try {
-      const req = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchValue}&orderBy=relevance`);
-      const searchResult = await req.json();
+      const searchResult = await fetchData();
       setBooksList(mapBooks(searchResult));
       setError(false);
-    } catch(error) {
+    } catch {
       setError(true);
     }
+  }
+
+  const handleKeyDown = async (e) => {
+    e.key === "Enter" ? handleSearch() : null;
   }
 
   return (
@@ -36,6 +44,7 @@ export default function CardsList ({ mostRelevantBooks }) {
         <input 
           className={ styles.searchField }
           onChange={ handleChange } 
+          onKeyDown={ handleKeyDown }
           value={ searchValue } 
           type='text'
           placeholder='Search for a book'
@@ -52,12 +61,10 @@ export default function CardsList ({ mostRelevantBooks }) {
         :
           (
             <div className={ styles.cardsContainer }>
-              { booksList.length ? 
+              {
                 booksList.map((bookData, index) => {
                   return <BookCard bookData={ bookData } key={ index }/>
                 })
-                :
-                null
               }
             </div>
           )
