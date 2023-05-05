@@ -1,11 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import BookCard from '../BookCard'
 import styles from './CardsList.module.css'
 
-export default function CardsList () {
+export default function CardsList ({ mostRelevantBooks }) {
   const [searchValue, setSearchValue] = useState('');
   const [booksList, setBooksList] = useState([]);
 
+  const mapBooks = books => books.items.map(item => item.volumeInfo)
+
+  useEffect(() => {
+    setBooksList(mapBooks(mostRelevantBooks))
+  }, [])
 
   const handleChange = (e) => {
     setSearchValue(e.target.value);
@@ -17,11 +22,7 @@ export default function CardsList () {
     const req = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchValue}&orderBy=relevance`);
     const searchResult = await req.json();
 
-    const booksInfo = searchResult.items.map(item => {
-      return item.volumeInfo;
-    })
-
-    setBooksList(booksInfo);
+    setBooksList(mapBooks(searchResult));
   }
 
   return (

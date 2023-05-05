@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Layout from '../components/Layout';
 import CardsList from '../components/CardsList';
 
-export default function Home() {
+function Home({ mostRelevantBooks }) {
   return (
     <>
       <Head>
@@ -12,8 +12,21 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <CardsList />
+        <CardsList mostRelevantBooks={ mostRelevantBooks }/>
       </Layout>
     </>
   )
 }
+
+export async function getStaticProps() {
+  const res = await fetch(`https://www.googleapis.com/books/v1/volumes?&q=aorderBy=relevance`);
+  const mostRelevantBooks = await res.json();
+
+  return {
+    props: { 
+      mostRelevantBooks
+    }
+  }
+}
+
+export default Home;
