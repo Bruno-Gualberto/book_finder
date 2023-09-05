@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import BookCard from '../BookCard'
 import styles from './CardsList.module.css'
+import { searchBooks } from '../../utils/api'
 
 export default function CardsList ({ mostRelevantBooks }) {
   const [searchValue, setSearchValue] = useState('');
@@ -19,14 +20,9 @@ export default function CardsList ({ mostRelevantBooks }) {
 // useQuery - react query
 // swr
 
-  const fetchData = async () => {
-    const req = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchValue}&orderBy=relevance`);
-    return await req.json();
-  }
-
   const handleSearch = async () => {
     try {
-      const searchResult = await fetchData();
+      const searchResult = await searchBooks(searchValue);
       setBooksList(mapBooks(searchResult));
       setError(false);
     } catch {
@@ -34,7 +30,7 @@ export default function CardsList ({ mostRelevantBooks }) {
     }
   }
 
-  const handleKeyDown = async (e) => {
+  const handleKeyDown = (e) => {
     e.key === "Enter" ? handleSearch() : null;
   }
 
@@ -50,6 +46,7 @@ export default function CardsList ({ mostRelevantBooks }) {
           placeholder='Search for a book'
         />
         <button
+          data-testid="search-button"
           className={ styles.searchButton }
           onClick={ handleSearch }
         >

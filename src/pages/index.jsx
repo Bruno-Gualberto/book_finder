@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Layout from '../components/Layout';
 import CardsList from '../components/CardsList';
+import SearchBar from '../components/SearchBar'
 
 function Home({ mostRelevantBooks }) {
   return (
@@ -12,6 +13,8 @@ function Home({ mostRelevantBooks }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
+        <h1>Book finder</h1>
+        <SearchBar />
         <CardsList mostRelevantBooks={ mostRelevantBooks }/>
       </Layout>
     </>
